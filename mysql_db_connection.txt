@@ -1,0 +1,42 @@
+import mysql.connector
+
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="_____________",
+    password="________"
+)
+
+my_cursor = mydb.cursor()
+
+my_cursor.execute(
+    "select * from  PRACTICES_DS.P12_ListOfOrders where country='France' and Customer_Name like 'A%' ")
+
+my_result = my_cursor.fetchall()
+
+# for x in my_result:
+#     with open("db_query_with_python.txt",'w') as f:
+#         f.write(x)
+
+sql = "INSERT INTO PRACTICES_DS.customers (Customer_Name,Country) VALUES (%s, %s)"
+val = [
+    ('Peter', 'France'),
+    ('Amy', 'India'),
+    ('Hannah', 'United Kingdom'),
+    ('Michael', 'France'),
+    ('Sandy', 'India'),
+    ('Betty', 'France'),
+    ('Richard', 'France'),
+    ('Susan', 'France'),
+    ('Vicky', 'India'),
+    ('Ben', 'France'),
+    ('William', 'India'),
+    ('Chuck', 'United Kingdom'),
+    ('Viola', 'France')
+]
+
+my_cursor.executemany(sql, val)
+
+
+mydb.commit()
+
+print(my_cursor.rowcount, "was inserted.")
